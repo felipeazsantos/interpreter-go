@@ -17,6 +17,13 @@ const (
 	// Operators
 	ASSING = "="
 	PLUS = "+"
+	MINUS = "-"
+	SLASH = "/"
+	ASTERIK = "*"
+	BANG = "!"
+	MINOR = "<"
+	MAJOR = ">"
+
 
 	// Delimiters
 	COMMA = ","
