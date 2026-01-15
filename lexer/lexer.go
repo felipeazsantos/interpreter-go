@@ -51,6 +51,13 @@ func (l *Lexer) skipWhitespace() {
 	}
 }
 
+func (l *Lexer) peekChar() byte {
+	if l.readPosition >= len(l.input) {
+		return 0
+	}
+	return l.input[l.readPosition]
+}
+
 func (l *Lexer) NextToken() token.Token {
 	var tok token.Token
 
@@ -58,7 +65,13 @@ func (l *Lexer) NextToken() token.Token {
 
 	switch l.ch {
 	case '=':
-		tok = newToken(token.ASSING, l.ch)
+		if l.peekChar() == '=' {
+			l.readChar()
+			tok.Type = token.EQ
+			tok.Literal = token.EQ
+		} else {
+			tok = newToken(token.ASSING, l.ch)
+		}
 	case ';':
 		tok = newToken(token.SEMICOLON, l.ch)
 	case '(':
@@ -74,7 +87,13 @@ func (l *Lexer) NextToken() token.Token {
 	case '}':
 		tok = newToken(token.RBRACE, l.ch)
 	case '!':
-		tok = newToken(token.BANG, l.ch)
+		if l.peekChar() == '=' {
+			l.readChar()
+			tok.Type = token.NOT_EQ
+			tok.Literal = token.NOT_EQ
+		} else {
+			tok = newToken(token.BANG, l.ch)
+		}
 	case '-':
 		tok = newToken(token.MINUS, l.ch)
 	case '/':
@@ -82,9 +101,9 @@ func (l *Lexer) NextToken() token.Token {
 	case '*':
 		tok = newToken(token.ASTERIK, l.ch)
 	case '<':
-		tok = newToken(token.MINOR, l.ch)
+		tok = newToken(token.LT, l.ch)
 	case '>':
-		tok = newToken(token.MAJOR, l.ch)
+		tok = newToken(token.GT, l.ch)
 	case 0:
 		tok.Literal = ""
 		tok.Type = token.EOF
