@@ -23,7 +23,7 @@ const (
 	SEMICOLON = ";"
 
 	LPAREN = "("
-	RPARAN = ")"
+	RPAREN = ")"
 	LBRACE = "{"
 	RBRACE = "}"
 
